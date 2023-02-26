@@ -1,61 +1,85 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <div id="app" class="w-full h-full flex flex-col justify-center bg-gray-300">
-    <div
-      v-if="showPasswordReset"
-      class="w-full h-full flex flex-col justify-center items-center p-4"
-    >
-      <PasswordReset />
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
     </div>
-    <div
-      v-else-if="userSession === null"
-      class="w-full h-full flex flex-col justify-center items-center p-4"
-    >
-      <Auth />
-    </div>
-    <div v-else class="w-full h-full flex flex-col justify-center items-center p-4 max-w-sm m-auto">
-      <Suspense>
-        <template #default>
-          <div>
-            <TodoList />
-            <button class="btn-black w-full mt-12" @click="handleLogout">
-              Logout
-            </button>
-          </div>
-        </template>
-        <template #fallback>
-          <Loading />
-        </template>
-      </Suspense>
-    </div>
-    <Footer />
-  </div>
+  </header>
+
+  <RouterView />
 </template>
 
-<script>
-import Auth from '@/components/Auth.vue'
-import PasswordReset from '@/components/PasswordReset.vue'
-import TodoList from '@/components/TodoList.vue'
-import Loading from '@/components/Loading.vue'
-import Footer from '@/components/Footer.vue'
-import { userSession, handleLogout } from '@/vuetils/useAuth'
-import { getParameterByName } from '@/lib/helpers'
-
-export default {
-  components: {
-    Auth,
-    PasswordReset,
-    TodoList,
-    Loading,
-    Footer,
-  },
-  computed: {
-    showPasswordReset: function() {
-      const requestType = getParameterByName('type', location.href)
-      return requestType === 'recovery'
-    }
-  },
-  setup() {
-    return { userSession, handleLogout }
-  },
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
 }
-</script>
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
