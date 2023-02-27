@@ -1,0 +1,16 @@
+module.exports = {
+  future: {
+    // removeDeprecatedGapUtilities: true,
+    // purgeLayersByDefault: true,
+  },
+  content: [
+    // Example content paths...
+    './public/**/*.html',
+    './src/**/*.{js,jsx,ts,tsx,vue}',
+  ],
+  theme: {
+    extend: {},
+  },
+  variants: {},
+  plugins: [],
+}
